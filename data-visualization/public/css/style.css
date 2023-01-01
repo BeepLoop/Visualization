@@ -1,0 +1,14 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+.record {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+}
+canvas {
+    display: block;
+    margin-inline: auto;
+}
