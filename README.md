@@ -1,7 +1,8 @@
-# Visualization
+# Visualization Exercises
 
 ## Description
-Repository for visualization projects
+Repository for visualization exercises
 
 ## Content
 1. Visualization of Monte Carlo method of apporoximating value of PI
+2. Visualization of finding the nearest neighbor
