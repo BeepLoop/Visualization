@@ -1,25 +1,26 @@
-let increment = 0.1
+let increment = 0.05
+let zOffIncrement = 0.00001
 let scale = 20
 let cols, rows
 let zOff = 0
 let particleCount = 1000
+let lineFollowIntensity = 0.04
 let particles = []
 let flowField
 
 function setup() {
-    createCanvas(900, 500)
+    createCanvas(1000, 500)
     cols = floor(width / scale)
     rows = floor(height / scale)
     flowField = new Array(rows * cols)
 
     for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(random(255), random(255), random(255)))
+        particles.push(new Particle(255, 0, 0))
     }
     background(255)
 }
 
 function draw() {
-    randomSeed()
     let yOff = 0
     for (let y = 0; y < rows; y++) {
         let xOff = 0
@@ -27,26 +28,18 @@ function draw() {
             let index = x + y * cols
             let angle = noise(xOff, yOff, zOff) * TWO_PI * 4
             let vector = p5.Vector.fromAngle(angle)
-            vector.setMag(0.4)
+            vector.setMag(lineFollowIntensity)
             flowField[index] = vector
             xOff += increment
-
-            // stroke(0, 80)
-            // strokeWeight(1)
-            // push()
-            // translate(x * scale, y * scale)
-            // rotate(vector.heading())
-            // line(0, 0, scale, 0)
-            // pop()
         }
         yOff += increment
-        zOff += 0.0001
+        zOff += zOffIncrement
     }
 
     for (const particle of particles) {
         particle.update()
-        particle.show()
         particle.wrapAround()
+        particle.show()
         particle.follow(flowField)
     }
 }
@@ -57,12 +50,12 @@ class Particle {
         this.prevPosition = this.position.copy()
         this.velocity = createVector(0, 0)
         this.acceleration = createVector(0, 0)
-        this.maxSpeed = 2
+        this.maxSpeed = 1
         this.size = 1
         this.r = r
         this.g = g
         this.b = b
-        this.alpha = 10
+        this.alpha = 15
     }
 
     update() {
